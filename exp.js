@@ -11,7 +11,7 @@ const rankingEl = document.getElementById("ranking");
 const clearButton = document.getElementById("clear-ranking");
 const restartButton = document.getElementById("restart-button"); // Corrected reference
 const timeProgress = document.querySelector(".time-progress");
-
+let timerInterval = null;
 let playerName = "";
 let currentQuestionIndex = 0;
 let score = 0;
@@ -21,10 +21,9 @@ let playerScores = [];
 
 setInterval(() => {
   if (timer !== 0) {
-    const width = parseFloat(getComputedStyle(timeProgress).getPropertyValue("--width")) || 0;
     const increment = 100 / 60; // Assuming the timer is set to 60 seconds
-    const newWidth = Math.min(width + increment, 100); // Ensure width doesn't exceed 100%
-    timeProgress.style.setProperty("--width", newWidth + "%");
+    const newWidth = Math.max(100 - (timer * increment), 0); // Calculate the new width
+    timeProgress.style.width = newWidth + "%"; // Set the width of the progress bar
   }
 }, 1000);
 
@@ -80,7 +79,7 @@ function setPlayerName() {
   playerNameContainer.style.display = "none";
   quizContainer.style.display = "block";
   timerEl.innerText = timer;
-  const timerInterval = setInterval(() => {
+  timerInterval = setInterval(() => { // Utilisez la variable globale timerInterval
     if (timer > 0) {
       timer--;
       timerEl.innerText = timer;
@@ -91,6 +90,7 @@ function setPlayerName() {
   }, 1000);
   showQuestion();
 }
+
 
 function showQuestion() {
   const question = quiz[currentQuestionIndex];
@@ -133,11 +133,18 @@ function checkAnswer(e) {
 }
 
 function endGame() {
+  clearInterval(timerInterval); // Clear the interval to stop the timer
+
+  // Calculate the remaining time when the game ends
+  const remainingTime = timer;
+
   quizContainer.style.display = "none";
   resultContainer.style.display = "block";
   document.getElementById("score").innerText = score;
+  timerEl.innerText = Time left is: ${timer} seconds;
 
-  playerScores.push({ name: playerName, score: score });
+  // Store player's name, score, and remaining time
+  playerScores.push({ name: playerName, score: score, remainingTime: remainingTime }); 
   playerScores.sort((a, b) => b.score - a.score);
 
   // Save playerScores to localStorage
@@ -145,7 +152,7 @@ function endGame() {
 
   let rankingText = "Ranking:\n";
   playerScores.forEach((player, index) => {
-    rankingText += `${index + 1}. ${player.name}: ${player.score}\n`;
+    rankingText += ${index + 1}. ${player.name}: ${player.score} - Time Left: ${60 - player.remainingTime} seconds\n;
   });
   rankingEl.innerText = rankingText;
 }
@@ -171,12 +178,26 @@ restartButton.addEventListener("click", () => {
 
   // Clear local storage
   localStorage.removeItem("playerScores");
-
+  clearInterval(timerInterval); // Arrêter le timer
+  timerInterval = null;
   // Reset UI
   playerNameContainer.style.display = "block";
-  startEl.style.display = "block";
+  startEl.style.display = "none"; // Afficher le bouton Start
   quizContainer.style.display = "none";
   resultContainer.style.display = "none";
-});
+  timerEl.innerText = timer; // Réinitialiser l'affichage du timer
+    // Reload playerScores from localStorage
+    if (localStorage.getItem("playerScores")) {
+      playerScores = JSON.parse(localStorage.getItem("playerScores"));
+    }
+  
+    // Update the ranking display
+    let rankingText = "Ranking:\n";
+    playerScores.forEach((player, index) => {
+      rankingText += ${index + 1}. ${player.name}: ${player.score}\n;
+    });
+    rankingEl.innerText = rankingText;
+  });
+
 
 showQuestion();
