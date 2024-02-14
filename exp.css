@@ -207,9 +207,25 @@ body {
   outline: none; /* Remove the default focus outline */
   border-color: #0056b3; /* Change the border color when the input is focused */
 }
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  #quiz-container {
+    width: 80%;
+    padding: 30px;
+  }
 
+  #player-name {
+    left: 10em;
+  }
+}
 
-#player-name:focus {
-  outline: none; /* Remove the default focus outline */
-  border-color: #0056b3; /* Change the border color when the input is focused */
+@media screen and (max-width: 576px) {
+  #quiz-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  #player-name {
+    left: 2em;
+  }
 }
