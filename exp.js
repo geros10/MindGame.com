@@ -167,38 +167,47 @@ clearButton.addEventListener("click", () => {
   }
 });
 
-// Event listener for restarting the game
 restartButton.addEventListener("click", () => {
   // Reset game variables
   playerName = "";
   currentQuestionIndex = 0;
   score = 0;
   timer = 60;
-  playerScores = [];
+
+  // Stop the timer if it's running
+  clearInterval(timerInterval);
+  timerInterval = null;
+
+  // Reload playerScores from localStorage
+  if (localStorage.getItem("playerScores")) {
+    playerScores = JSON.parse(localStorage.getItem("playerScores"));
+  }
+
+  // Add the current player's data to the playerScores array if a name is provided
+  if (playerName !== "") {
+    playerScores.push({ name: playerName, score: score });
+  }
+
+  // Sort playerScores based on score
+  playerScores.sort((a, b) => b.score - a.score);
+
+  // Update the ranking display
+  let rankingText = "Ranking:\n";
+  playerScores.forEach((player, index) => {
+    rankingText += `${index + 1}. ${player.name}: ${player.score}\n`;
+  });
+  rankingEl.innerText = rankingText;
 
   // Clear local storage
   localStorage.removeItem("playerScores");
-  clearInterval(timerInterval); // Arrêter le timer
-  timerInterval = null;
+
   // Reset UI
   playerNameContainer.style.display = "block";
-  startEl.style.display = "none"; // Afficher le bouton Start
+  startEl.style.display = "none";
   quizContainer.style.display = "none";
   resultContainer.style.display = "none";
-  timerEl.innerText = timer; // Réinitialiser l'affichage du timer
-    // Reload playerScores from localStorage
-    if (localStorage.getItem("playerScores")) {
-      playerScores = JSON.parse(localStorage.getItem("playerScores"));
-    }
-  
-    // Update the ranking display
-    let rankingText = "Ranking:\n";
-    playerScores.forEach((player, index) => {
-      rankingText += `${index + 1}. ${player.name}: ${player.score}\n`;
-    });
-    rankingEl.innerText = rankingText;
-  });
+  timerEl.innerText = timer;
+});
 
 
 showQuestion();
-
