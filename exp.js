@@ -141,7 +141,7 @@ function endGame() {
   quizContainer.style.display = "none";
   resultContainer.style.display = "block";
   document.getElementById("score").innerText = score;
-  timerEl.innerText = Time left is: ${timer} seconds;
+  timerEl.innerText = `Time left is: ${timer} seconds`;
 
   // Store player's name, score, and remaining time
   playerScores.push({ name: playerName, score: score, remainingTime: remainingTime }); 
@@ -152,7 +152,7 @@ function endGame() {
 
   let rankingText = "Ranking:\n";
   playerScores.forEach((player, index) => {
-    rankingText += ${index + 1}. ${player.name}: ${player.score} - Time Left: ${60 - player.remainingTime} seconds\n;
+    rankingText += `${index + 1}. ${player.name}: ${player.score} - Time Took to finnish: ${60 - player.remainingTime} s\n`;
   });
   rankingEl.innerText = rankingText;
 }
@@ -194,10 +194,11 @@ restartButton.addEventListener("click", () => {
     // Update the ranking display
     let rankingText = "Ranking:\n";
     playerScores.forEach((player, index) => {
-      rankingText += ${index + 1}. ${player.name}: ${player.score}\n;
+      rankingText += `${index + 1}. ${player.name}: ${player.score}\n`;
     });
     rankingEl.innerText = rankingText;
   });
 
 
 showQuestion();
+
