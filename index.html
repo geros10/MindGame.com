@@ -37,13 +37,15 @@
                       █░░▄▀▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀▄▀▄▀░░████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
                       █░░░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░░░░░████░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█
                       ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+
         </h1>
         <input type="text" id="player-name" placeholder="Enter your name">
-        <button id="submit"onclick="setPlayerName()">Submit</button>
+        <button id="submit" onclick="setPlayerName()">Submit</button>
     </div>
     <div id="timer"></div>
     <div class="bg-gradient"></div>
     <div class="time-progress" style="--width: 0;" data-label="time:"></div>
+
     <div id="quiz-container" style="display: none;">
         <h2 id="question"></h2>
         <ul id="choices"></ul>
@@ -55,8 +57,32 @@
         <button id="clear-ranking">Clear Ranking</button>
         <button id="restart-button">Restart</button>
     </div>
-    
+    <form id="quiz-form" class="quiz-form-style" style="display: none;">
+        <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="math" name="subjects[]" value="Math">
+            <label class="quiz-form-label" for="math">Math</label>
+          </div>
+          <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="pc" name="subjects[]" value="PC">
+            <label class="quiz-form-label" for="pc">PC</label>
+          </div>
+          <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="arabe" name="subjects[]" value="Arabe">
+            <label class="quiz-form-label" for="arabe">Arabe</label>
+          </div>
+          <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="francais" name="subjects[]" value="Francais">
+            <label class="quiz-form-label" for="francais">Francais</label>
+          </div>
+          <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="anglais" name="subjects[]" value="Anglais">
+            <label class="quiz-form-label" for="anglais">Anglais</label>
+          </div>
+          <div class="quiz-form-subject">
+            <input class="quiz-form-checkbox" type="checkbox" id="svt" name="subjects[]" value="SVT">
+            <label class="quiz-form-label" for="svt">SVT</label>
+          </div>
+    </form>
     <script src="exp.js"></script>
 </body>
 </html>
-
