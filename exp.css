@@ -163,9 +163,11 @@ body {
   font-size: 16px;
   font-family: Arial, sans-serif;
   color: black;
-  width: 300px; /* Adjust the width as needed */
-  height: 200px; /* Adjust the height as needed */
-  overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+  width: 400px;
+  height: 200px;
+  overflow-y: auto;
+  border: 2px solid #007bff; /* Add border and adjust color */
+  padding: 15px; /* Add padding inside the ranking */
 }
 
 #restart-button {
@@ -207,7 +209,38 @@ body {
   outline: none; /* Remove the default focus outline */
   border-color: #0056b3; /* Change the border color when the input is focused */
 }
+/* Clear Ranking Button */
+#clear-ranking {
+  padding: 10px 20px;
+  background-color: #dc3545; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+#clear-ranking:hover {
+  background-color: #ff5858; /* Darker shade of red on hover */
+}
 /* Media Queries */
+@media screen and (max-width: 992px) {
+  #quiz-container {
+    width: 70%;
+    padding: 40px;
+  }
+
+  #player-name {
+    left: 5em;
+  }
+
+  #question {
+    column-count: 2; /* Arrange questions in two columns */
+  }
+}
+
 @media screen and (max-width: 768px) {
   #quiz-container {
     width: 80%;
@@ -215,7 +248,11 @@ body {
   }
 
   #player-name {
-    left: 10em;
+    left: 3em;
+  }
+
+  #question {
+    column-count: 1; /* Arrange questions in a single column */
   }
 }
 
