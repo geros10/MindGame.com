@@ -11,6 +11,8 @@ const rankingEl = document.getElementById("ranking");
 const clearButton = document.getElementById("clear-ranking");
 const restartButton = document.getElementById("restart-button"); // Corrected reference
 const timeProgress = document.querySelector(".time-progress");
+
+
 let timerInterval = null;
 let playerName = "";
 let currentQuestionIndex = 0;
@@ -18,6 +20,12 @@ let score = 0;
 let timer = 60;
 let playerScores = [];
 
+
+
+
+document.getElementById('submit').addEventListener('click', function() {
+  document.getElementById('quiz-form').style.display = 'none';
+});
 
 setInterval(() => {
   if (timer !== 0) {
@@ -27,13 +35,19 @@ setInterval(() => {
   }
 }, 1000);
 
-
-
+document.getElementById("restart-button").addEventListener("click", function() {
+  // Hide the timer when the restart button is clicked
+  document.getElementById("timer").style.visibility = "hidden";
+});
 // Load playerScores from localStorage on page load
 if (localStorage.getItem("playerScores")) {
   playerScores = JSON.parse(localStorage.getItem("playerScores"));
 }
 
+document.getElementById("submit").addEventListener("click", function() {
+  // Hide the timer when the restart button is clicked
+  document.getElementById("bar").style.visibility = "visible";
+});
 const quiz = [
   {
     question: "What is the hottest planet?",
@@ -65,10 +79,11 @@ const quiz = [
     answer: 2,
   },
 ];
-
 function start() {
-  playerNameContainer.style.display = "block";
-  startEl.style.display = "none";
+    document.getElementById("start").style.display = "none"; // Hide the start button
+    document.getElementById("player-name-container").style.display = "block"; // Show the player name container
+    document.getElementById("timer").style.visibility = "visible"; // Show the timer
+    document.getElementById("quiz-form").style.display = "block"; // Show the quiz form
 }
 
 function setPlayerName() {
@@ -79,6 +94,7 @@ function setPlayerName() {
   playerNameContainer.style.display = "none";
   quizContainer.style.display = "block";
   timerEl.innerText = timer;
+  document.getElementById("timer").style.visibility = "visible";
   timerInterval = setInterval(() => { // Utilisez la variable globale timerInterval
     if (timer > 0) {
       timer--;
@@ -164,6 +180,17 @@ clearButton.addEventListener("click", () => {
     localStorage.removeItem("playerScores");
     playerScores = [];
     rankingEl.innerText = "Ranking has been cleared.";
+  } else if (accept === "") {
+    while(accept === ""){
+      accept = window.prompt('Please enter yes or no');
+    }
+    if(accept !== "yes"){
+      alert('Scores will not be cleared.');
+    }else if(accept === "yes") {
+      localStorage.removeItem("playerScores");
+      playerScores = [];
+      rankingEl.innerText = "Ranking has been cleared.";
+    }
   }
 });
 
@@ -208,6 +235,7 @@ restartButton.addEventListener("click", () => {
   resultContainer.style.display = "none";
   timerEl.innerText = timer;
 });
+
 
 
 showQuestion();
