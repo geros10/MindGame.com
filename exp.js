@@ -9,46 +9,82 @@ const playerNameContainer = document.getElementById("player-name-container");
 const playerNameInput = document.getElementById("player-name");
 const rankingEl = document.getElementById("ranking");
 const clearButton = document.getElementById("clear-ranking");
-const restartButton = document.getElementById("restart-button"); // Corrected reference
+const restartButton = document.getElementById("restart-button");
 const timeProgress = document.querySelector(".time-progress");
+const math = document.getElementById("math");
+const pc = document.getElementById("pc");
+const informatique = document.getElementById("informatique");
+const francais = document.getElementById("francais");
+const anglais = document.getElementById("anglais");
+const svt = document.getElementById("svt");
+const submit = document.getElementById("submit");
 
 
-let timerInterval = null;
-let playerName = "";
-let currentQuestionIndex = 0;
-let score = 0;
-let timer = 60;
-let playerScores = [];
+let selectedSubject = null;
 
+const quizMath = [
+  {
+    question: "L'orthocentre c'est le point de rencontre de ...",
+    choices: ["trois médiatrices", "trois medianes", "trois bissectrices", "trois hauteurs"],
+    answer: 3,
+  },
 
+  {
+    question: "Le carre parfait de 81 est ...",
+    choices: ["5²", "8²", "9²", "12²"],
+    answer: 2,
+  },
 
+  {
+    question: "La developpement est rendre...",
+    choices: ["un somme à une multiplication", "une multiplication à un somme", "La pissance de diviseur", "addition avec puissance"],
+    answer: 0,
+  },
 
-document.getElementById('submit').addEventListener('click', function() {
-  document.getElementById('quiz-form').style.display = 'none';
-});
+  {
+    question: "6÷2(1+2) = ?",
+    choices: ["1", "5", "9", "6"],
+    answer: 2,
+  },
 
-setInterval(() => {
-  if (timer !== 0) {
-    const increment = 100 / 60; // Assuming the timer is set to 60 seconds
-    const newWidth = Math.max(100 - (timer * increment), 0); // Calculate the new width
-    timeProgress.style.width = newWidth + "%"; // Set the width of the progress bar
-  }
-}, 1000);
+  {
+    question: "Simplifier ∫¹√cost/1+e¹× ƒ(dx)",
+    choices: ["(√cos⁻¹)²+4⁄π", "0", "2", "impossible"],
+    answer: 2,
+  },
+];
+const quizPc = [
+  {
+    question: "Qu'est ce qu'une source primaire",
+    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    answer: 3,
+  },
 
-document.getElementById("restart-button").addEventListener("click", function() {
-  // Hide the timer when the restart button is clicked
-  document.getElementById("timer").style.visibility = "hidden";
-});
-// Load playerScores from localStorage on page load
-if (localStorage.getItem("playerScores")) {
-  playerScores = JSON.parse(localStorage.getItem("playerScores"));
-}
+  {
+    question: "Who invented Electricity?",
+    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    answer: 2,
+  },
 
-document.getElementById("submit").addEventListener("click", function() {
-  // Hide the timer when the restart button is clicked
-  document.getElementById("bar").style.visibility = "visible";
-});
-const quiz = [
+  {
+    question: "Acrophobia is a fear of...",
+    choices: ["Heights", "Water", "Spiders", "Dark"],
+    answer: 0,
+  },
+
+  {
+    question: "What is the currency of China?",
+    choices: ["USD", "MAD", "Yuan", "Peso"],
+    answer: 2,
+  },
+
+  {
+    question: "What is the national animal of Australia?",
+    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    answer: 2,
+  },
+];
+const quizInformatique = [
   {
     question: "What is the hottest planet?",
     choices: ["Earth", "Sun", "Jupiter", "Venus"],
@@ -79,12 +115,251 @@ const quiz = [
     answer: 2,
   },
 ];
-function start() {
-    document.getElementById("start").style.display = "none"; // Hide the start button
-    document.getElementById("player-name-container").style.display = "block"; // Show the player name container
-    document.getElementById("timer").style.visibility = "visible"; // Show the timer
-    document.getElementById("quiz-form").style.display = "block"; // Show the quiz form
+const quizFrancais = [
+  {
+    question: "What is the hottest planet?",
+    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    answer: 3,
+  },
+
+  {
+    question: "Who invented Electricity?",
+    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    answer: 2,
+  },
+
+  {
+    question: "Acrophobia is a fear of...",
+    choices: ["Heights", "Water", "Spiders", "Dark"],
+    answer: 0,
+  },
+
+  {
+    question: "What is the currency of China?",
+    choices: ["USD", "MAD", "Yuan", "Peso"],
+    answer: 2,
+  },
+
+  {
+    question: "What is the national animal of Australia?",
+    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    answer: 2,
+  },
+];
+const quizSvt = [
+  {
+    question: "What is the hottest planet?",
+    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    answer: 3,
+  },
+
+  {
+    question: "Who invented Electricity?",
+    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    answer: 2,
+  },
+
+  {
+    question: "Acrophobia is a fear of...",
+    choices: ["Heights", "Water", "Spiders", "Dark"],
+    answer: 0,
+  },
+
+  {
+    question: "What is the currency of China?",
+    choices: ["USD", "MAD", "Yuan", "Peso"],
+    answer: 2,
+  },
+
+  {
+    question: "What is the national animal of Australia?",
+    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    answer: 2,
+  },
+];
+const quizAnglais = [
+  {
+    question: "What is the hottest planet?",
+    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    answer: 3,
+  },
+
+  {
+    question: "Who invented Electricity?",
+    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    answer: 2,
+  },
+
+  {
+    question: "Acrophobia is a fear of...",
+    choices: ["Heights", "Water", "Spiders", "Dark"],
+    answer: 0,
+  },
+
+  {
+    question: "What is the currency of China?",
+    choices: ["USD", "MAD", "Yuan", "Peso"],
+    answer: 2,
+  },
+
+  {
+    question: "What is the national animal of Australia?",
+    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    answer: 2,
+  },
+];
+
+
+let timerInterval = null;
+let playerName = "";
+let currentQuestionIndex = 0;
+let score = 0;
+let timer = 60;
+let playerScores = [];
+
+
+document.getElementById('submit').addEventListener('click', function() {
+  document.getElementById('quiz-form').style.display = 'none';
+});
+
+setInterval(() => {
+  if (timer !== 0) {
+    const increment = 100 / 60; // Assuming the timer is set to 60 seconds
+    const newWidth = Math.max(100 - (timer * increment), 0); // Calculate the new width
+    timeProgress.style.width = newWidth + "%"; // Set the width of the progress bar
+  }
+}, 1000);
+
+setInterval(() => {
+  if (timer <= 30) {
+    timeProgress.style.backgroundColor = "yellow";
+    timerEl.style.color = "black";
+  }  
+  if (timer <= 10) {
+    timeProgress.style.backgroundColor = "red";
+    timerEl.style.color ="white";
+  }  
+  if (timer >= 30) {
+    timeProgress.style.backgroundColor = "green";
+    timerEl.style.color ="white";
+  }  
+}, 5)
+
+document.getElementById("restart-button").addEventListener("click", function() {
+  // Hide the timer when the restart button is clicked
+  document.getElementById("timer").style.visibility = "hidden";
+});
+// Load playerScores from localStorage on page load
+if (localStorage.getItem("playerScores")) {
+  playerScores = JSON.parse(localStorage.getItem("playerScores"));
 }
+
+document.getElementById("submit").addEventListener("click", function() {
+  // Hide the timer when the restart button is clicked
+  document.getElementById("bar").style.visibility = "visible";
+});
+
+
+// Add event listeners to subject buttons
+math.addEventListener("click", function() {
+  clearSelectedSubject();
+  quiz = quizMath;
+  selectedSubject = "Math"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, blue, cyan)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, blue, cyan)`;
+  start();
+});
+
+pc.addEventListener("click", function() {
+  clearSelectedSubject();
+  selectedSubject = "PC"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, green, greenyellow)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, green, greenyellow)`;
+  quiz = quizPc;
+  start();
+});
+
+informatique.addEventListener("click", function() {
+  clearSelectedSubject();
+  selectedSubject = "Informatique"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, red, yellow)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, red, yellow)`;
+  quiz = quizInformatique;
+  start();
+});
+
+francais.addEventListener("click", function() {
+  clearSelectedSubject();
+  selectedSubject = "Francais"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, pink, purple)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, pink, purple)`;
+  quiz = quizFrancais;
+  start();
+});
+
+anglais.addEventListener("click", function() {
+  clearSelectedSubject();
+  selectedSubject = "Anglais"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, yellow, black)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, yellow, black)`;
+  quiz = quizAnglais;
+  start();
+});
+
+svt.addEventListener("click", function() {
+  clearSelectedSubject();
+  selectedSubject = "Svt"; 
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, brown, yellow)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, brown, yellow)`;
+  quiz = quizSvt;
+  start();
+});
+
+function clearSelectedSubject() {
+  selectedSubject = null;
+}
+
+
+// Update showQuestion() function to use selected quiz array
+function showQuestion() {
+  const question = quiz[currentQuestionIndex];
+  questionEl.innerText = question.question;
+
+  choicesEl.innerHTML = "";
+  question.choices.forEach((choice, index) => {
+    const li = document.createElement("li");
+    li.innerText = choice;
+    li.dataset.index = index;
+    li.onclick = checkAnswer;
+    choicesEl.appendChild(li);
+  });
+}
+
+// Modify ranking display to sort playerScores based on scores before displaying
+function displayRanking() {
+  let rankingText = "Ranking:\n";
+  playerScores.sort((a, b) => b.score - a.score); // Sort playerScores based on scores
+  playerScores.forEach((player, index) => {
+    rankingText +=  `${index + 1}. ${player.name}: ${player.score}\n `;
+  });
+  rankingEl.innerText = rankingText;
+}
+
+function handleDefaultSubject() {
+  if (!selectedSubject) {
+    selectedSubject = quizInformatique;
+  }
+}
+
+function start() {
+  handleDefaultSubject(); // Check for default subject
+  document.getElementById("start").style.display = "none"; // Hide the start button
+  document.getElementById("player-name-container").style.display = "block"; // Show the player name container
+  document.getElementById("timer").style.visibility = "visible"; // Show the timer
+  document.getElementById("quiz-form").style.display = "block"; // Show the quiz form
+}
+
+
 
 function setPlayerName() {
   playerName = playerNameInput.value;
@@ -99,27 +374,13 @@ function setPlayerName() {
     if (timer > 0) {
       timer--;
       timerEl.innerText = timer;
+      timerEl.style.display = "block";
     } else {
       clearInterval(timerInterval);
       endGame();
     }
   }, 1000);
   showQuestion();
-}
-
-
-function showQuestion() {
-  const question = quiz[currentQuestionIndex];
-  questionEl.innerText = question.question;
-
-  choicesEl.innerHTML = "";
-  question.choices.forEach((choice, index) => {
-    const li = document.createElement("li");
-    li.innerText = choice;
-    li.dataset.index = index;
-    li.onclick = checkAnswer;
-    choicesEl.appendChild(li);
-  });
 }
 
 function skip() {
@@ -234,8 +495,11 @@ restartButton.addEventListener("click", () => {
   quizContainer.style.display = "none";
   resultContainer.style.display = "none";
   timerEl.innerText = timer;
+  timerEl.style.display = "none";
+  document.getElementById("quiz-form").style.display = "block";
+  quizContainer.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
+  document.body.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
 });
-
 
 
 showQuestion();
