@@ -1,7 +1,11 @@
 body {
   height: 100vh;
   width: 100%;
-  background-image: linear-gradient(45deg, rgb(255, 130, 130), red);
+  background-image: linear-gradient(45deg, rgb(247, 86, 86), rgb(252, 99, 11));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -25,12 +29,12 @@ body {
   left: 0.5em;
   top: 0px;
   bottom: 0.5em;
-  width: calc(var(--width, 0) * 1%);  
+  width: calc(var(--width, 0) * 1%);
   min-width: 2rem;
   max-width: calc(100% - 3em);
-  background-color: green; 
+  background-color: green;
   border-radius: 1em;
-  padding: 1em; 
+  padding: 1em;
 }
 
 #timer {
@@ -59,7 +63,7 @@ body {
   border-radius: 15px;
   border-color: #fff;
   position: absolute;
-  left: 20em;
+  right: 20em;
   bottom: 8em;
 }
 
@@ -202,13 +206,14 @@ body {
   transition: border-color 0.3s ease; /* Add transition effect for border color */
   position: absolute;
   bottom: 6em;
-  left: 20em;
+  left: 16em;
 }
 
 #player-name:focus {
   outline: none; /* Remove the default focus outline */
   border-color: #0056b3; /* Change the border color when the input is focused */
 }
+
 /* Clear Ranking Button */
 #clear-ranking {
   padding: 10px 20px;
@@ -225,78 +230,51 @@ body {
 #clear-ranking:hover {
   background-color: #ff5858; /* Darker shade of red on hover */
 }
-/* Style the containing div */
-.quiz-form-subject {
+
+
+/* Style the custom radio button container */
+.radio-container {
+  display: inline-flex; /* Change display to inline-flex */
+  align-items: center; /* Center vertically */
   position: relative;
-  display: flex;
-  flex-direction: row; /* Change the direction to row */
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-  top: 500px;
-}
-
-
-
-/* Style the labels and add a left margin */
-.quiz-form-label {
-  display: block;
-  padding-left: 30px;
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-/* Style the checkboxes */
-.quiz-form-checkbox {
-  display: none;
-}
-
-/* Style the checkbox labels */
-.quiz-form-checkbox + .quiz-form-label {
-  position: relative;
-  padding-left: 35px;
   cursor: pointer;
   color: #333;
+  
 }
 
-/* Style the checkbox labels when hovered */
-.quiz-form-checkbox + .quiz-form-label:hover {
-  color: #000;
-}
-
-/* Style the checkbox checkmark */
-.quiz-form-checkbox + .quiz-form-label::before {
+/* Style the custom radio button */
+.radio-container::before {
   content: "";
   display: block;
   width: 20px;
   height: 20px;
-  position: absolute;
-  left: 0;
-  top: 0;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 50%;
+  
 }
 
-/* Style the checkbox checkmark when the checkbox is checked */
-.quiz-form-checkbox:checked + .quiz-form-label::before {
+/* Style the custom radio button when checked */
+input[type="radio"]:checked + .radio-container::before {
   background-color: green;
   border-color: green;
 }
 
-/* Add a SVG checkmark to the checkmark span when the checkbox is checked */
-.quiz-form-checkbox:checked + .quiz-form-label::before::after {
+/* Add a dot to the custom radio button when checked */
+input[type="radio"]:checked + .radio-container::after {
   content: "";
   display: block;
   width: 10px;
-  height: 5px;
-  border-left: 2px solid white;
-  border-bottom: 2px solid white;
-  transform: rotate(45deg);
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 50%;
-  transform: translate(-70%, -50%);
+}
+
+/* Style the radio container when hovered */
+.radio-container:hover::before {
+  border-color: #000;
 }
 
 
@@ -315,7 +293,6 @@ body {
     column-count: 2; /* Arrange questions in two columns */
   }
 }
-
 
 @media screen and (max-width: 768px) {
   #quiz-container {
@@ -339,6 +316,27 @@ body {
   }
 
   #player-name {
-    left:2em;
+    left: 2em;
+  }
 }
+
+@media screen and (max-width: 480px) {
+  /* Adjust styles for smaller screen sizes */
+  #quiz-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  #player-name {
+    left: 1em;
+  }
+
+  #question {
+    column-count: 1; /* Arrange questions in a single column */
+  }
+
+  .radio-container {
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
 }
+
