@@ -70,58 +70,58 @@ const quizPc = [
   },
 
   {
-    question: "Bruh?",
-    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
-    answer: 2,
-  },
-
-  {
-    question: "Acrophobia is a fear of...",
-    choices: ["Heights", "Water", "Spiders", "Dark"],
+    question: "Un exemple d'un récepteur de lumière",
+    choices: ["l'œil", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
     answer: 0,
   },
 
   {
-    question: "What is the currency of China?",
-    choices: ["USD", "MAD", "Yuan", "Peso"],
-    answer: 2,
+    question: "Une substance naturelle sont celles...",
+    choices: ["obtenues dans les laboratoires", "qui existent dans la nature", "qui sont identiques à celles de la nature", "Les trois derniers suggestions sont fausses"],
+    answer: 1,
   },
 
   {
-    question: "What is the national animal of Australia?",
-    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    question: "Un exemple d'une substance artificielle",
+    choices: ["le sucre", "le lait", "le sel", "le nylon"],
+    answer: 3,
+  },
+
+  {
+    question: "Le pétrole est une matière ...",
+    choices: ["synthétique", "fabriquer", "naturel", "Les trois derniers suggestions sont fausses"],
     answer: 2,
   },
 ];
 const quizInformatique = [
   {
-    question: "C'est quoi le résultat de cette ?",
-    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    question: "La fonction append() est utiliser pour...",
+    choices: ["Supprimer", "Mise a jour", "répeter", "ajouter"],
     answer: 3,
   },
 
   {
-    question: "Who invented Electricity?",
-    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
-    answer: 2,
-  },
-
-  {
-    question: "Acrophobia is a fear of...",
-    choices: ["Heights", "Water", "Spiders", "Dark"],
+    question: "Comment créer une liste?",
+    choices: ["liste = []", "liste = {}", "liste = ()", `"liste = ""`],
     answer: 0,
   },
 
   {
-    question: "What is the currency of China?",
-    choices: ["USD", "MAD", "Yuan", "Peso"],
+    question: "Créer une fonction c'est avec le mot clé...",
+    choices: ["def", "for", "while", "input"],
+    answer: 0,
+  },
+
+  {
+    question: "Indiqué une égaliter sur deux variables c'est avec...",
+    choices: ["<=", "!=", "==", ">="],
     answer: 2,
   },
 
   {
-    question: "What is the national animal of Australia?",
-    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
-    answer: 2,
+    question: "La fonction len()...",
+    choices: ["reçoie le texte de l'utilisateur", "reçoie le nombre des éléments", "envoie le texte de l'utilisateur", "les trois dernieres suggestions sont fausses"],
+    answer: 3,
   },
 ];
 const quizFrancais = [
@@ -545,3 +545,4 @@ restartButton.addEventListener("click", () => {
 
 
 showQuestion();
+
