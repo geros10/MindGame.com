@@ -371,6 +371,8 @@ function handleDefaultSubject() {
 function start() {
   handleDefaultSubject(); // Check for default subject
   document.getElementById("start").style.display = "none"; // Hide the start button
+  document.getElementById("label").style.display = "block";
+  document.getElementById("subject-buttons").style.display = "block";
   document.getElementById("player-name-container").style.display = "block"; // Show the player name container
   document.getElementById("timer").style.visibility = "visible"; // Show the timer
   document.getElementById("quiz-form").style.display = "block"; // Show the quiz form
@@ -384,6 +386,7 @@ function setPlayerName() {
   }
   playerNameContainer.style.display = "none";
   quizContainer.style.display = "block";
+  document.getElementById("form").style.display = "none";
   timerEl.innerText = timer;
   document.getElementById("timer").style.visibility = "visible";
   timerInterval = setInterval(() => { // Utilisez la variable globale timerInterval
@@ -452,7 +455,8 @@ function endGame() {
 
   // Calculate the remaining time when the game ends
   const remainingTime = timer;
-
+  
+  document.getElementById("form").style.display = "none"; 
   quizContainer.style.display = "none";
   resultContainer.style.display = "block";
   document.getElementById("score").innerText = score;
@@ -503,6 +507,12 @@ restartButton.addEventListener("click", () => {
   score = 0;
   timer = 60;
 
+  document.getElementById("result-container").style.display = "none"; // Hide the result container
+  document.getElementById("start").style.display = "block"; // Show the start button
+  document.getElementById("quiz-container").style.display = "none"; // Hide the quiz container
+  document.getElementById("timer").textContent = ""; // Clear the timer text
+  document.getElementById("bar").style.display = "none";
+  
   // Stop the timer if it's running
   clearInterval(timerInterval);
   timerInterval = null;
@@ -536,6 +546,7 @@ restartButton.addEventListener("click", () => {
   quizContainer.style.display = "none";
   resultContainer.style.display = "none";
   timerEl.innerText = timer;
+  document.getElementById("form").style.display = "block"; 
   timerEl.style.display = "none";
   document.getElementById("quiz-form").style.display = "block";
   bar.style.display = "none";
@@ -543,6 +554,13 @@ restartButton.addEventListener("click", () => {
   document.body.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
 });
 
+// Add an event listener to each subject button
+document.querySelectorAll('.subject-button').forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default behavior of the button
+    // Your code to handle the subject selection goes here
+  });
+});
 
 showQuestion();
 
