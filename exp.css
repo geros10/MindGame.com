@@ -213,7 +213,7 @@ body {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   font-size: 16px;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI", "Roboto", sans-serif;
   color: black;
   width: 550px;
   height: 200px;
@@ -330,4 +330,26 @@ body {
   top: 55px;
   left: 0;
   width: 125px;
+}
+#return-button {
+  display: block;
+  margin: 20px auto;
+  padding: 20px 40px;
+  background-color: #544eaa;
+  color: #fff;
+  font-size: large;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  top: 415px;
+  right: 190px;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+#return-button:hover {
+  cursor: pointer;
+  transform: translate(0px ,-15px);
+  background-color: #7a34fe;
+  color: #f196ff;
 }
