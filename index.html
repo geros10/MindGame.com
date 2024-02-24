@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mind Game</title>
+    <title>Jeu d'esprit</title>
     <link rel="icon" type="image/webp" href="brain-game-logo-vector-600nw-522430846.webp"/>
     <link rel="stylesheet" href="exp.css">
 </head>
 <body>
     <div id="player-name-container" class="centered" style="display: none;">
         <input type="text" id="player-name" placeholder="Enter your name">
-        <button id="submit" onclick="setPlayerName()">Submit</button>
+        <button id="submit" onclick="setPlayerName()">Soumettre</button>
     </div>    
-    <div id="start" onclick="start()">Start</div>
+    <div id="start" onclick="start()">Commencer</div>
     <div id="bar"></div>
     <div id="timer"></div>
     <div class="bg-gradient"></div>
@@ -21,17 +21,17 @@
     <div id="quiz-container" style="display: none;">
         <h2 id="question"></h2>
         <ul id="choices"></ul>
-        <button id="skip" onclick="skip()">Skip</button>
+        <button id="skip" onclick="skip()">Passer</button>
     </div>
     <div id="result-container" style="display: none;">
         <h3>Your Score Is: <span id="score"></span></h3>
         <h3 id="ranking"></h3>
-        <button id="clear-ranking">Clear Ranking</button>
-        <button id="restart-button">Restart</button>
+        <button id="clear-ranking">Effacer le classement</button>
+        <button id="restart-button">Rejouer</button>
     </div>
     <form id="form">
         <div id="label" style="display: none;">
-            <label class="label">Choose one of the following subjects:</label>
+            <label class="label">Choisissez l'une des matières suivantes:</label>
         </div>
     
         <div id="subject-buttons" class="subject-buttons centered" style="display: none;">
@@ -45,8 +45,7 @@
         
     </form>
     
-
+    <img class="img" src="téléchargement.jpeg">
     <script src="exp.js"></script>
 </body>
 </html>
-
