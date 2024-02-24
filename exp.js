@@ -20,6 +20,7 @@ const francais = document.getElementById("francais");
 const anglais = document.getElementById("anglais");
 const svt = document.getElementById("svt");
 const submit = document.getElementById("submit");
+let quiz = null;
 const subjectColors = {
   Math: `url('image.jpg')`, 
   PC: `url('pc.jpg')`,
@@ -58,7 +59,7 @@ const quizMath = [
 
   {
     question: "Quelle est la solution de cette équation (x-1)² +1 = (x-1)² -1",
-    choices: ["(√cos⁻¹)²+4⁄π", "0", "2", "impossible"],
+    choices: ["(√cos⁻¹)²+4⁄π", "0", "2", "Pas de solution"],
     answer: 3,
   },
 ];
@@ -188,33 +189,33 @@ const quizSvt = [
 ];
 const quizAnglais = [
   {
-    question: "What is the hottest planet?",
-    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    question: "The verb read in the past",
+    choices: ["red", "rad", "rud", "read"],
     answer: 3,
   },
 
   {
-    question: "Who invented Electricity?",
-    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
-    answer: 2,
-  },
-
-  {
-    question: "Acrophobia is a fear of...",
-    choices: ["Heights", "Water", "Spiders", "Dark"],
+    question: "Cast...",
+    choices: ["all the actors in a film", "The main story", "the part of an actor", "words for a play"],
     answer: 0,
   },
 
   {
-    question: "What is the currency of China?",
-    choices: ["USD", "MAD", "Yuan", "Peso"],
+    question: "Report...",
+    choices: ["People", "Articles", "News", "An email"],
     answer: 2,
   },
 
   {
-    question: "What is the national animal of Australia?",
-    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
-    answer: 2,
+    question: "The verb play in the past continuous",
+    choices: ["played", "was playing", "is playing", "has been played"],
+    answer: 1,
+  },
+
+  {
+    question: "Where people go to borrow books...",
+    choices: ["Library", "Bank", "Bridge", "Museum"],
+    answer: 0,
   },
 ];
 
@@ -361,7 +362,6 @@ function clearSelectedSubject() {
 function showQuestion() {
   const question = quiz[currentQuestionIndex];
   questionEl.innerText = question.question;
-
   choicesEl.innerHTML = "";
   question.choices.forEach((choice, index) => {
     const li = document.createElement("li");
@@ -372,16 +372,6 @@ function showQuestion() {
   });
 }
 
-// Modify ranking display to sort playerScores based on scores before displaying
-function displayRanking() {
-  let rankingText = "Ranking:\n";
-  playerScores.sort((a, b) => b.score - a.score); // Sort playerScores based on scores
-  playerScores.forEach((player, index) => {
-    const playerName = index === 0 ? `${player.name} 👑` : player.name;
-    rankingText += `${index + 1}. ${playerName}: ${player.score}\n`;
-  });
-  rankingEl.innerText = rankingText;
-}
 
 
 function handleDefaultSubject() {
@@ -432,14 +422,6 @@ function setPlayerName() {
   showQuestion();
 }
 
-function skip() {
-  currentQuestionIndex++;
-  if (currentQuestionIndex === quiz.length) {
-    endGame();
-    return;
-  }
-  showQuestion();
-}
 
 function skip() {
   currentQuestionIndex++;
@@ -488,10 +470,19 @@ function checkAnswer(e) {
   }
 }
 
+function displayRanking() {
+  let rankingText = "Le classement:\n";
+  playerScores.sort((a, b) => b.score - a.score); // Sort playerScores based on scores
+  playerScores.forEach((player, index) => {
+    const displayName = index === 0 ? `${player.name} 👑` : player.name; 
+    rankingText += `${index + 1}. ${displayName}: ${player.score} | Il a fallu du temps pour finir: ${60 - player.remainingTime}s | matière: ${player.selectedSubject}\n`;
+  });
+  rankingEl.innerText = rankingText;
+}
 
 function endGame() {
   clearInterval(timerInterval); // Clear the interval to stop the timer
-
+  timerSound.pause();
   // Calculate the remaining time when the game ends
   const remainingTime = timer;
   document.getElementById("form").style.display = "none"; 
@@ -518,26 +509,22 @@ function endGame() {
 
 // Event listener for clearing the ranking
 clearButton.addEventListener("click", () => {
-  accept = window.prompt("Etes-vous sûr de vouloir supprimer tous les scores? Cette action ne peut pas être annulée.");
+  let accept = window.prompt("Êtes-vous sûr de vouloir supprimer tous les scores? Cette action ne peut pas être annulée. Tapez 'oui' pour confirmer.");
+
+  // Vérifie si l'utilisateur confirme en tapant "oui"
   if (accept === "oui") {
     localStorage.removeItem("playerScores");
     localStorage.removeItem("playerSubjects");
     playerScores = [];
-    rankingEl.innerText = "Les scores ont été effacé.";
-  } else if (accept === "") {
-    while(accept === ""){
-      accept = window.prompt('Please enter yes or no');
-    }
-    if(accept !== "oui"){
-      alert('Les scores ne seront pas effacés.');
-    }else if(accept === "oui") {
-      localStorage.removeItem("playerScores");
-      localStorage.removeItem("playerSubjects");
-      playerScores = [];
-      rankingEl.innerText = "Le classement a été effacé.";
-    }
+    rankingEl.innerText = "Les scores ont été effacés.";
+  } else if (accept === "non" || accept === null) { // Vérifie si l'utilisateur annule ou tape "non"
+    alert('Les scores ne seront pas effacés.');
+  } else { // Gère une entrée invalide
+    alert('Veuillez taper "oui" pour confirmer ou annuler pour conserver les scores.');
   }
 });
+
+
 
 restartButton.addEventListener("click", () => {
   // Reset game variables
@@ -612,26 +599,30 @@ restartButton.addEventListener("click", () => {
 
 
 let timerSound = new Audio("0223.MP3");
-let time = new Audio("0223 (1).MP3");
 
 setInterval(() => {
-  if(timer <= 10 && timer !== 0) {
+  if(timer <= 10 && timer !== 0 && currentQuestionIndex !== quiz.length) {
     timerSound.play();
-    time.pause();
   } 
   if(timer >= 10) {
     timerSound.pause();
-    time.pause();
-  }
-  if(timer <= 30 && timer >=11){
-    time.play();
   }
   if(timer == 0) {
     timerSound.pause();
-    time.pause();
+
 }
 },100)
 
+// Define the function to return to the previous question
+function returnToPreviousQuestion() {
+  // Decrement currentQuestionIndex to go back to the previous question
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    showQuestion();
+  } else {
+    alert("You are already at the first question!");
+  }
+}
 
 
 document.querySelectorAll('.subject-button').forEach(button => {
@@ -640,6 +631,3 @@ document.querySelectorAll('.subject-button').forEach(button => {
     // Your code to handle the subject selection goes here
   });
 });
-
-
-showQuestion();
