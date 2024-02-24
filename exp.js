@@ -21,12 +21,12 @@ const anglais = document.getElementById("anglais");
 const svt = document.getElementById("svt");
 const submit = document.getElementById("submit");
 const subjectColors = {
-  Math: 'linear-gradient(45deg, blue, cyan)',
-  PC: 'linear-gradient(45deg, green, greenyellow)',
-  Informatique: 'linear-gradient(45deg, red, yellow)',
-  Francais: 'linear-gradient(45deg, pink, purple)',
-  Anglais: 'linear-gradient(45deg, yellow, black)',
-  Svt: 'linear-gradient(45deg, brown, yellow)'
+  Math: `url('image.jpg')`, 
+  PC: `url('pc.jpg')`,
+  Informatique: `url('inf.jpg')`,
+  Francais: `url('fr.jpg')`,
+  Anglais: `url('en.jpg')`,
+  Svt: `url('svt.jpg')`
 };
 
 let selectedSubject = null;
@@ -71,7 +71,7 @@ const quizPc = [
 
   {
     question: "Un exemple d'un récepteur de lumière",
-    choices: ["l'œil", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    choices: ["l'œil", "les mains ", "la table", "la tête"],
     answer: 0,
   },
 
@@ -249,7 +249,7 @@ setInterval(() => {
     timerEl.style.color ="white";
   }  
   if (timer >= 30) {
-    timeProgress.style.backgroundColor = "green";
+    timeProgress.style.backgroundColor = "#4CAF50";
     timerEl.style.color ="white";
   }  
 }, 5)
@@ -278,16 +278,24 @@ math.addEventListener("click", function() {
   clearSelectedSubject();
   quiz = quizMath;
   selectedSubject = "Math"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, blue, cyan)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, blue, cyan)`;
+  quizContainer.style.backgroundImage = `url('image.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('image.jpg')`;
   start();
 });
 
 pc.addEventListener("click", function() {
   clearSelectedSubject();
   selectedSubject = "PC"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, green, greenyellow)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, green, greenyellow)`;
+  quizContainer.style.backgroundImage = `url('pc.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('pc.jpg')`;
   quiz = quizPc;
   start();
 });
@@ -295,8 +303,12 @@ pc.addEventListener("click", function() {
 informatique.addEventListener("click", function() {
   clearSelectedSubject();
   selectedSubject = "Informatique"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, red, yellow)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, red, yellow)`;
+  quizContainer.style.backgroundImage = `url('inf.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('inf.jpg')`;
   quiz = quizInformatique;
   start();
 });
@@ -304,8 +316,12 @@ informatique.addEventListener("click", function() {
 francais.addEventListener("click", function() {
   clearSelectedSubject();
   selectedSubject = "Francais"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, pink, purple)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, pink, purple)`;
+  quizContainer.style.backgroundImage = `url('fr.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('fr.jpg')`;
   quiz = quizFrancais;
   start();
 });
@@ -313,8 +329,12 @@ francais.addEventListener("click", function() {
 anglais.addEventListener("click", function() {
   clearSelectedSubject();
   selectedSubject = "Anglais"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, yellow, black)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, yellow, black)`;
+  quizContainer.style.backgroundImage = `url('en.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('en.jpg')`;
   quiz = quizAnglais;
   start();
 });
@@ -322,8 +342,12 @@ anglais.addEventListener("click", function() {
 svt.addEventListener("click", function() {
   clearSelectedSubject();
   selectedSubject = "Svt"; 
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, brown, yellow)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, brown, yellow)`;
+  quizContainer.style.backgroundImage = `url('svt.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('svt.jpg')`;
   quiz = quizSvt;
   start();
 });
@@ -353,17 +377,23 @@ function displayRanking() {
   let rankingText = "Ranking:\n";
   playerScores.sort((a, b) => b.score - a.score); // Sort playerScores based on scores
   playerScores.forEach((player, index) => {
-    rankingText +=  `${index + 1}. ${player.name}: ${player.score}\n `;
+    const playerName = index === 0 ? `${player.name} 👑` : player.name;
+    rankingText += `${index + 1}. ${playerName}: ${player.score}\n`;
   });
   rankingEl.innerText = rankingText;
 }
+
 
 function handleDefaultSubject() {
   if (!selectedSubject) {
     selectedSubject = "Informatique";
     quiz = quizInformatique;
-    quizContainer.style.backgroundImage = `linear-gradient(45deg, red, yellow)`; // Adjust background color if needed
-    document.body.style.backgroundImage = `linear-gradient(45deg, red, yellow)`; // Adjust background color if needed
+    quizContainer.style.backgroundImage = `url('inf.jpg')`;
+    quizContainer.style.backgroundRepeat = 'no-repeat';
+    quizContainer.style.backgroundSize = 'cover';
+    quizContainer.style.backgroundPosition = 'center';
+    quizContainer.style.backgroundAttachement = 'fixed';
+    document.body.style.backgroundImage = `url('inf.jpg')`;
   }
 }
 
@@ -399,6 +429,15 @@ function setPlayerName() {
       endGame();
     }
   }, 1000);
+  showQuestion();
+}
+
+function skip() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex === quiz.length) {
+    endGame();
+    return;
+  }
   showQuestion();
 }
 
@@ -455,12 +494,12 @@ function endGame() {
 
   // Calculate the remaining time when the game ends
   const remainingTime = timer;
-  
   document.getElementById("form").style.display = "none"; 
   quizContainer.style.display = "none";
+  document.body.style.height = "10vh";
   resultContainer.style.display = "block";
   document.getElementById("score").innerText = score;
-  timerEl.innerText = `Time left is: ${timer} seconds`;
+  timerEl.innerText = `Le temps restant est: ${timer} seconds`;
 
   // Store player's name, score, and remaining time
   playerScores.push({ name: playerName, score: score, remainingTime: remainingTime, selectedSubject: selectedSubject}); 
@@ -470,32 +509,32 @@ function endGame() {
   localStorage.setItem("playerScores", JSON.stringify(playerScores));
   localStorage.setItem("playerSubjects", JSON.stringify(playerScores));
 
-  let rankingText = "Ranking:\n";
+  let rankingText = "Le classement:\n";
   playerScores.forEach((player, index) => {
-    rankingText += `${index + 1}- ${player.name}: ${player.score} | Time Took to finnish: ${60 - player.remainingTime}s | subject: ${player.selectedSubject}\n`;
+    rankingText += `${index + 1}- ${player.name}: ${player.score} | Il a fallu du temps pour finir: ${60 - player.remainingTime}s | matière: ${player.selectedSubject}\n`;
   });
   rankingEl.innerText = rankingText;
 }
 
 // Event listener for clearing the ranking
 clearButton.addEventListener("click", () => {
-  accept = window.prompt("Are you sure you want to delete all scores? This action cannot be undone.");
-  if (accept === "yes") {
+  accept = window.prompt("Etes-vous sûr de vouloir supprimer tous les scores? Cette action ne peut pas être annulée.");
+  if (accept === "oui") {
     localStorage.removeItem("playerScores");
     localStorage.removeItem("playerSubjects");
     playerScores = [];
-    rankingEl.innerText = "Ranking has been cleared.";
+    rankingEl.innerText = "Les scores ont été effacé.";
   } else if (accept === "") {
     while(accept === ""){
       accept = window.prompt('Please enter yes or no');
     }
-    if(accept !== "yes"){
-      alert('Scores will not be cleared.');
-    }else if(accept === "yes") {
+    if(accept !== "oui"){
+      alert('Les scores ne seront pas effacés.');
+    }else if(accept === "oui") {
       localStorage.removeItem("playerScores");
       localStorage.removeItem("playerSubjects");
       playerScores = [];
-      rankingEl.innerText = "Ranking has been cleared.";
+      rankingEl.innerText = "Le classement a été effacé.";
     }
   }
 });
@@ -507,12 +546,18 @@ restartButton.addEventListener("click", () => {
   score = 0;
   timer = 60;
 
-  document.getElementById("result-container").style.display = "none"; // Hide the result container
-  document.getElementById("start").style.display = "block"; // Show the start button
-  document.getElementById("quiz-container").style.display = "none"; // Hide the quiz container
-  document.getElementById("timer").textContent = ""; // Clear the timer text
-  document.getElementById("bar").style.display = "none";
-  
+  // Hide the result container
+  resultContainer.style.display = "none";
+
+  // Hide the quiz container
+  quizContainer.style.display = "none";
+
+  // Clear the timer text
+  timerEl.textContent = "";
+
+  // Hide the progress bar
+  bar.style.display = "none";
+
   // Stop the timer if it's running
   clearInterval(timerInterval);
   timerInterval = null;
@@ -542,19 +587,53 @@ restartButton.addEventListener("click", () => {
 
   // Reset UI
   playerNameContainer.style.display = "block";
-  startEl.style.display = "none";
-  quizContainer.style.display = "none";
-  resultContainer.style.display = "none";
   timerEl.innerText = timer;
-  document.getElementById("form").style.display = "block"; 
   timerEl.style.display = "none";
-  document.getElementById("quiz-form").style.display = "block";
-  bar.style.display = "none";
+  document.getElementById("form").style.display = "block"; // Show the form
   quizContainer.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
   document.body.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
+
+  // Set the default subject to "Informatique"
+  selectedSubject = "Informatique";
+  quiz = quizInformatique;
+  quizContainer.style.backgroundImage = `url('inf.jpg')`;
+  quizContainer.style.backgroundRepeat = 'no-repeat';
+  quizContainer.style.backgroundSize = 'cover';
+  quizContainer.style.backgroundPosition = 'center';
+  quizContainer.style.backgroundAttachement = 'fixed';
+  document.body.style.backgroundImage = `url('inf.jpg')`;
+
+  // Show the quiz form
+  document.getElementById("quiz-form").style.display = "block";
+
+  // Start the quiz immediately
+  setPlayerName();
 });
 
-// Add an event listener to each subject button
+
+let timerSound = new Audio("0223.MP3");
+let time = new Audio("0223 (1).MP3");
+
+setInterval(() => {
+  if(timer <= 10 && timer !== 0) {
+    timerSound.play();
+    time.pause();
+  } 
+  if(timer >= 10) {
+    timerSound.pause();
+    time.pause();
+  }
+  if(timer <= 30 && timer >=11){
+    time.play();
+  }
+  if(timer == 0) {
+    timerSound.pause();
+    time.pause();
+}
+},100)
+
+
+
 document.querySelectorAll('.subject-button').forEach(button => {
   button.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default behavior of the button
@@ -562,5 +641,5 @@ document.querySelectorAll('.subject-button').forEach(button => {
   });
 });
 
-showQuestion();
 
+showQuestion();
