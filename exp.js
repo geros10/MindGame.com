@@ -133,14 +133,14 @@ const quizFrancais = [
   },
 
   {
-    question: "Who invented Electricity?",
-    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    question: "Un argument géologique...",
+    choices: ["La simullation des fossiles", "c'est une chaine de montagne sous-marine", "La correspondance des structures rocheuses", "l'agencement géométrique entre les lignes côtiers"],
     answer: 2,
   },
 
   {
-    question: "Acrophobia is a fear of...",
-    choices: ["Heights", "Water", "Spiders", "Dark"],
+    question: "Plaques convergentes...",
+    choices: ["Plaque Africaine et Eurasienne", "L'Africaine et la Sud Américaine", "Plaque Nord Américaine et celle paacifique", "Le pacifique et le nazca"],
     answer: 0,
   },
 
@@ -165,7 +165,7 @@ const quizSvt = [
 
   {
     question: "Who invented Electricity?",
-    choices: ["Einstein", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
+    choices: ["haaaaaa", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
     answer: 2,
   },
 
@@ -470,16 +470,6 @@ function checkAnswer(e) {
   }
 }
 
-function displayRanking() {
-  let rankingText = "Le classement:\n";
-  playerScores.sort((a, b) => b.score - a.score); // Sort playerScores based on scores
-  playerScores.forEach((player, index) => {
-    const displayName = index === 0 ? `${player.name} 👑` : player.name; 
-    rankingText += `${index + 1}. ${displayName}: ${player.score} | Il a fallu du temps pour finir: ${60 - player.remainingTime}s | matière: ${player.selectedSubject}\n`;
-  });
-  rankingEl.innerText = rankingText;
-}
-
 function endGame() {
   clearInterval(timerInterval); // Clear the interval to stop the timer
   timerSound.pause();
@@ -502,7 +492,8 @@ function endGame() {
 
   let rankingText = "Le classement:\n";
   playerScores.forEach((player, index) => {
-    rankingText += `${index + 1}- ${player.name}: ${player.score} | Il a fallu du temps pour finir: ${60 - player.remainingTime}s | matière: ${player.selectedSubject}\n`;
+    const displayName = index === 0 ? `${player.name} 👑` : player.name; 
+    rankingText += `${index + 1}. ${displayName}: ${player.score} | Il a fallu du temps pour finir: ${60 - player.remainingTime}s | matière: ${player.selectedSubject}\n`;
   });
   rankingEl.innerText = rankingText;
 }
@@ -577,8 +568,6 @@ restartButton.addEventListener("click", () => {
   timerEl.innerText = timer;
   timerEl.style.display = "none";
   document.getElementById("form").style.display = "block"; // Show the form
-  quizContainer.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
-  document.body.style.backgroundImage = `linear-gradient(45deg, orange, red)`;
 
   // Set the default subject to "Informatique"
   selectedSubject = "Informatique";
