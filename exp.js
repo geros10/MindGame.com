@@ -125,10 +125,10 @@ const quizInformatique = [
     answer: 3,
   },
 ];
-const quizFrancais = [
+const quizSvt = [
   {
-    question: "What is the hottest planet?",
-    choices: ["Earth", "Sun", "Jupiter", "Venus"],
+    question: "Quelle est la première étape de fécondation?",
+    choices: ["Pénétration de la tête...", "Fusion du noyau mâle...", "Formation de la cellule-œuf", "Attraction des spermatozoides..."],
     answer: 3,
   },
 
@@ -145,45 +145,45 @@ const quizFrancais = [
   },
 
   {
-    question: "What is the currency of China?",
-    choices: ["USD", "MAD", "Yuan", "Peso"],
-    answer: 2,
+    question: "Combien de type de Reproduction Chez les animaux?",
+    choices: ["3 types", "2 types", "1 type", "5 types"],
+    answer: 1,
   },
 
   {
-    question: "What is the national animal of Australia?",
-    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    question: "Combien de types de développement y a-t-il?",
+    choices: ["1 type", "6 types", "2 types", "9 types"],
     answer: 2,
   },
 ];
-const quizSvt = [
+const quizFrancais = [
   {
-    question: "What is the hottest planet?",
-    choices: ["Earth", "Sun", "Jupiter", "Venus"],
-    answer: 3,
-  },
-
-  {
-    question: "Who invented Electricity?",
-    choices: ["haaaaaa", "Bin Douda", "Cristiano Ronaldo", "Nicola Tesla"],
-    answer: 2,
-  },
-
-  {
-    question: "Acrophobia is a fear of...",
-    choices: ["Heights", "Water", "Spiders", "Dark"],
+    question: "Les trois unités de Théâtre classique sont temps,lieu et ...?",
+    choices: ["action", "genre", "type", "Auto Biographie"],
     answer: 0,
   },
 
   {
-    question: "What is the currency of China?",
-    choices: ["USD", "MAD", "Yuan", "Peso"],
-    answer: 2,
+    question: "Une tirade est une...",
+    choices: ["Un mot", "une phrase", "replique", "longue replique"],
+    answer: 3,
   },
 
   {
-    question: "What is the national animal of Australia?",
-    choices: ["Tiger", "Lion", "Kangaroo", "Eagle"],
+    question: "Quel type de théâtre est le Cid ?",
+    choices: ["tragédie comique", "tragédie classique", "tragédie romantique", "tragédie historique"],
+    answer: 0,
+  },
+
+  {
+    question: "La forme emphatique c'est...",
+    choices: ["Insister sur une phrase.", "Ne pas Insister sur une phrase.", "Donner un ordre", "Poser une question"],
+    answer: 0,
+  },
+
+  {
+    question: "Combien de classe grammaticale y a-t-il?",
+    choices: ["7", "5", "10", "2"],
     answer: 2,
   },
 ];
@@ -605,11 +605,14 @@ setInterval(() => {
 // Define the function to return to the previous question
 function returnToPreviousQuestion() {
   // Decrement currentQuestionIndex to go back to the previous question
-  if (currentQuestionIndex > 0) {
+  aler = window.prompt("Êtes-vous sûr? Tapez 'oui' pour confirmer.")
+  if(aler === "oui"){
+      if (currentQuestionIndex > 0) {
     currentQuestionIndex--;
     showQuestion();
   } else {
-    alert("You are already at the first question!");
+    alert("Vous êtes déjà à la première question !");
+  }
   }
 }
 
